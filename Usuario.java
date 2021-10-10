@@ -13,6 +13,15 @@ import java.time.LocalDate;
  * @author bryan
  */
 class Usuario {
+    
+    
+    
+    private int id;
+    private String firstName;
+    private String lastName;
+    private LocalDate birthDay;
+    private String gender;
+    private String isAlive;
 
     public int getId() {
         return id;
@@ -38,11 +47,11 @@ class Usuario {
         this.lastName = lastName;
     }
 
-    public int getBirthDay() {
+    public LocalDate getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(int birthDay) {
+    public void setBirthDay(LocalDate birthDay) {
         this.birthDay = birthDay;
     }
 
@@ -62,20 +71,18 @@ class Usuario {
         this.isAlive = isAlive;
     }
 
+    private int age(){
+        return LocalDate.now().getYear() - birthDay.getYear();
+    }
+    
     @Override
     public String toString() {
-        return  id + ": " + lastName + ", " + firstName  + " - " + birthDay + " years old - " + gender + " - " + isAlive;
+        return  id + ": " + lastName + ", " + firstName  + " - " + age() + " years old - " + gender + " - " + isAlive;
     }
     
     
-    private int id;
-    private String firstName;
-    private String lastName;
-    private int birthDay;
-    private String gender;
-    private String isAlive;
 
-    public Usuario(int id, String firstName, String lastName, int birthDay, String gender, String isAlive) {
+    public Usuario(int id, String firstName, String lastName, LocalDate birthDay, String gender, String isAlive) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

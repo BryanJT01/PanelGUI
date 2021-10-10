@@ -4,12 +4,17 @@
  */
 package panel;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import static java.time.LocalDate.now;
 import java.time.Period;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -218,11 +223,11 @@ public class Panel1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFirstNameActionPerformed
 
+    
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         // TODO add your handling code here:
         LocalDate birthDate = LocalDate.parse(txtBirthDate.getText());
-        Period period = Period.between(birthDate, now());
-
+        
         String aliveDead;
         if(chbAlive.isSelected())
         aliveDead = "Alive";
@@ -239,7 +244,7 @@ public class Panel1 extends javax.swing.JFrame {
         try {
 
             int ID = Integer.parseInt (txtId.getText());
-            Usuario newUser = new Usuario(ID, txtFirstName.getText(), txtLastName.getText(), period.getYears(), maleOrFemale, aliveDead);
+            Usuario newUser = new Usuario(ID, txtFirstName.getText(), txtLastName.getText(), birthDate, maleOrFemale, aliveDead);
             String usuario = newUser.toString();
             jTextArea1.setText(jTextArea1.getText() + usuario + "\n");  
             
@@ -263,8 +268,27 @@ public class Panel1 extends javax.swing.JFrame {
     }//GEN-LAST:event_chbAliveActionPerformed
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
-        // TODO add your handling code here:
-        //AQUI SE CARGA EN LA VENTANA LO QUE SE HA GUARDADO
+       
+            // TODO add your handling code here:
+            //AQUI SE CARGA EN LA VENTANA LO QUE SE HA GUARDADO
+             String line = "";  
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("texto.csv"));
+            while ((line = br.readLine()) != null)   //returns a Boolean value  
+        {  
+        String[] usuario = line.split("\n");    // use comma as separator  
+        
+        for(int i = 0; i < usuario.length; i++){
+        jTextArea1.setText(jTextArea1.getText() + usuario[i] + "\n");  }
+        //System.out.println("Employee [First Name=" + employee[0] + ", Last Name=" + employee[1] + ", Designation=" + employee[2] + ", Contact=" + employee[3] + ", Salary= " + employee[4] + ", City= " + employee[5] +"]");
+        }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Panel1.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Panel1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_btnLoadActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
